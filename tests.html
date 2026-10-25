@@ -1,0 +1,8 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>XML JSON Kit tests</title><style>body{font:16px/1.6 system-ui;max-width:1000px;margin:40px auto;padding:20px}li{padding:6px}pre{white-space:pre-wrap}</style></head><body><h1>XML JSON Kit regression tests</h1><p id="summary">Running...</p><ol id="results"></ol><script src="core.js"></script><script src="fixtures.js"></script><script>
+let passed=0;
+for(const test of XML_JSON_FIXTURES){let actual,error;try{actual=JSON.stringify(XmlJsonKit.convert(test.xml));}catch(e){error=e.message;}
+const ok=test.error?Boolean(error&&error.includes(test.error)):!error&&actual===JSON.stringify(test.expected);if(ok)passed++;
+const li=document.createElement('li');li.textContent=(ok?'PASS: ':'FAIL: ')+test.id+' — '+test.note;
+if(!ok){const pre=document.createElement('pre');pre.textContent='Actual: '+(error||actual)+'\nExpected: '+JSON.stringify(test.expected??test.error);li.append(pre);}document.getElementById('results').append(li);}
+document.getElementById('summary').textContent=passed+' / '+XML_JSON_FIXTURES.length+' passed; '+(XML_JSON_FIXTURES.length-passed)+' failed.';
+</script></body></html>

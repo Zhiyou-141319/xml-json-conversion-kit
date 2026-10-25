@@ -1,0 +1,22 @@
+id,xml,expected_json,expected_error,note
+leaf,<name>Ada</name>,"{""name"": ""Ada""}",,A root leaf remains a string.
+repeated,<orders><order>A</order><order>B</order></orders>,"{""orders"": {""order"": [""A"", ""B""]}}",,Repeated siblings remain together.
+single,<orders><order>A</order></orders>,"{""orders"": {""order"": ""A""}}",,Single siblings do not become arrays.
+attributes,"<item id=""007"">Notebook</item>","{""item"": {""_attributes"": {""id"": ""007""}, ""_text"": ""Notebook""}}",,Attributes and text remain separate.
+empty,<root><value/><value></value></root>,"{""root"": {""value"": ["""", """"]}}",,Repeated empty elements preserve count.
+strings,<r><id>007</id><price>12.50</price><flag>false</flag></r>,"{""r"": {""id"": ""007"", ""price"": ""12.50"", ""flag"": ""false""}}",,No implicit number or boolean conversion.
+namespace,"<x:item xmlns:x=""urn:example"">A</x:item>","{""x:item"": {""_attributes"": {""xmlns:x"": ""urn:example""}, ""_text"": ""A""}}",,Qualified names and declarations are retained.
+escaped,<x>A &amp; B &lt; C</x>,"{""x"": ""A & B < C""}",,Built-in XML entities become characters.
+unicode,<name>中文 café</name>,"{""name"": ""中文 café""}",,Unicode strings are preserved.
+cdata,<x><![CDATA[A < B]]></x>,"{""x"": ""A < B""}",,"CDATA contributes text, not markup."
+mixed,<p>Hello <b>world</b>!</p>,"{""p"": {""_text"": ""Hello !"", ""b"": ""world""}}",,Demonstrates lost mixed-content ordering.
+whitespace,<x>  value  </x>,"{""x"": ""value""}",,Surrounding whitespace is trimmed.
+comments,<x><!-- note -->A<?hint yes?></x>,"{""x"": ""A""}",,Comments and processing instructions are omitted.
+prototype-name,<r><__proto__>A</__proto__><constructor>B</constructor></r>,"{""r"": {""__proto__"": ""A"", ""constructor"": ""B""}}",,Object prototype names remain ordinary data.
+empty-attribute,"<x id=""""/>","{""x"": {""_attributes"": {""id"": """"}}}",,Empty attribute does not vanish.
+malformed,<r><x></r>,,Malformed XML,Mismatched tags are rejected.
+empty-input,  ,,non-empty,Empty input is rejected.
+doctype,"<!DOCTYPE x [<!ENTITY a ""A"">]><x>&a;</x>",,DOCTYPE,DTD-based documents are not supported.
+reserved,<r><_text>A</_text></r>,,Reserved element name,Reserved child keys do not overwrite metadata.
+undefined-entity,<x>&missing;</x>,,Malformed XML,Undefined entities are rejected.
+two-roots,<a/><b/>,,Malformed XML,Multiple document roots are rejected.
