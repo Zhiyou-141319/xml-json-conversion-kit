@@ -1,5 +1,7 @@
 # XML JSON Conversion Kit
 
+[![NoLogin Verified](https://nologin.tools/badges/flat.svg)](https://nologin.tools/badge/parsebloom-com "Verified by NoLoginTools.org")
+
 A dependency-free browser converter, synthetic fixtures, and a review checklist for moving record-shaped XML into JSON without silently guessing numeric types.
 
 The mapping is based on the browser-local converter at [ParseBloom](https://parsebloom.com/).
